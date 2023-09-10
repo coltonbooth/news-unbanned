@@ -5,6 +5,8 @@ from apify_client import ApifyClient
 from newsbackend.models import ScrapedArticle, GeneratedArticle  # Replace `your_app` with the actual name of your Django app.
 from newsbackend.views import generate_article, generate_image
 from PIL import Image
+from django.core.files.base import ContentFile
+
 
 
 
@@ -72,15 +74,20 @@ def generate_and_save_articles():
                 print(generated_article)
                 generated_articles.append(generated_article)
 
-                image_file = generate_image(generated_article['title'])
+                image_bytesio = generate_image(generated_article['title'])
 
-                if image_file:
-                    GeneratedArticle.objects.create(
+
+
+                if image_bytesio:
+                    # Convert BytesIO to Django File
+                    image_file = ContentFile(image_bytesio.getvalue())
+                    generated_article_instance = GeneratedArticle(
                         original_article=scraped_article,
                         generated_title=generated_article['title'],
                         generated_text=generated_article['article'],
-                        generated_image=image_file  # Assigning the image file here
                     )
+                    generated_article_instance.generated_image.save(f"{scraped_article.id}.jpg", image_file)
+                    generated_article_instance.save()
 
         except Exception as e:
             print(f"Exception occurred: {e}")
