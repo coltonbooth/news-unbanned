@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from newsbackend.views import GenerateAndSaveArticleView, DisplayArticlesView, ArticleDetailView
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('generate/', GenerateAndSaveArticleView.as_view(), name='generate_articles'),
     path('', DisplayArticlesView.as_view(), name='display_articles'),
     path('article/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

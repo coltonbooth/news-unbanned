@@ -9,11 +9,12 @@ import openai
 import json
 import traceback
 import base64
-import PIL
 import io
+from PIL import Image
 
-openai.api_key = ''
-client = ApifyClient("")
+
+openai.api_key = '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'
+client = ApifyClient("apify_api_qypMuKLdGwib5vhlNcrA9PDvzpfmNO1w592y")
 
 
 def generate_article(scraped_article: list) -> list:
