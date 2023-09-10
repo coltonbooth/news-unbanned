@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic.detail import DetailView
+from django.core.paginator import Paginator
 from .models import ScrapedArticle, GeneratedArticle
 from apify_client import ApifyClient
 import openai
@@ -126,8 +127,17 @@ class DisplayArticlesView(View):
     template_name = 'display_articles.html'
 
     def get(self, request):
-        articles = GeneratedArticle.objects.all()
-        return render(request, self.template_name, {'articles': articles})
+        articles_list = GeneratedArticle.objects.all().order_by('-generated_at') # Ordering by `generated_at` in descending order
+        paginator = Paginator(articles_list, 10) # Show 10 articles per page
+
+        page = request.GET.get('page')
+        articles = paginator.get_page(page)
+
+        first_article = None
+        if articles:  # Check if there's at least one article
+            first_article = articles[0]
+
+        return render(request, self.template_name, {'articles': articles, 'first_article': first_article})
 
 class ArticleDetailView(DetailView):
     model = GeneratedArticle

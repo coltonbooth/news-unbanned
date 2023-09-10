@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block og_tags %}
+<meta property="og:image" content="data:image/png;base64,{{ first_article.generated_image }}" />
+{% endblock %}
 {% block title %}- Articles{% endblock %}
 {% block content %}
 <div class="articles-container">
@@ -25,6 +28,20 @@
         <hr>
     </div>
     {% endfor %}
+    {% if articles.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ articles.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span class="current-page">
+        Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+    </span>
+
+    {% if articles.has_next %}
+        <a href="?page={{ articles.next_page_number }}">Next</a>
+        <a href="?page={{ articles.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+
 </div>
 
 <style>
