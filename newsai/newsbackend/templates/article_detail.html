@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+{% block og_tags %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ article.generated_image.url }}" />
+{% endblock %}
 {% block title %}- {{article.generated_title}}{% endblock %}
 {% block content %}
 <div class="articles-container">
     <div class="article">
     <h2>{{ article.generated_title }}</h2>
     <div class="article-content">
-        <img src="data:image/png;base64,{{ article.generated_image }}" alt="{{ article.generated_title }}">
+        <img src="{{ article.generated_image.url }}" alt="{{ article.generated_title }}">
         {{ article.generated_text|linebreaks }}
         <a href="{{ article.original_article.url }}" target="_blank" rel="noopener noreferrer">
             Read the original article here

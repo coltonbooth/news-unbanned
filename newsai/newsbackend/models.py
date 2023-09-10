@@ -29,6 +29,6 @@ class GeneratedArticle(models.Model):
     original_article = models.ForeignKey(ScrapedArticle, on_delete=models.CASCADE)
     generated_title = models.CharField(max_length=300)
     generated_text = models.TextField()
-    generated_image = models.TextField()  # Saving base64 encoded image as text
+    generated_image = models.ImageField(upload_to='generated_images/')
     generated_at = models.DateTimeField(auto_now_add=True)
 

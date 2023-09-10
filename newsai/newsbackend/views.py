@@ -8,6 +8,9 @@ from apify_client import ApifyClient
 import openai
 import json
 import traceback
+import base64
+import PIL
+import io
 
 openai.api_key = ''
 client = ApifyClient("")
@@ -36,7 +39,18 @@ def generate_image(article_title):
             response_format="b64_json"
         )
         image_b64_json = response['data'][0]['b64_json']
-        return image_b64_json
+        image_data = base64.b64decode(image_b64_json)
+        
+        # Create an Image object from the decoded data
+        image = Image.open(io.BytesIO(image_data))
+        
+        # Save to a temporary file
+        temp_file = io.BytesIO()
+        image.save(temp_file, format='PNG')
+        temp_file.name = 'generated_image.png'
+        temp_file.seek(0)  # move file cursor to the beginning
+
+        return temp_file
     except Exception as e:
         print(f"Error generating image: {e}")
         return None
@@ -105,14 +119,14 @@ class GenerateAndSaveArticleView(View):
                     print(generated_article)
                     generated_articles.append(generated_article)
 
-                    generated_image = generate_image(generated_article['title'])
+                    image_file = generate_image(generated_article['title'])
 
-                if generated_image:
+                if image_file:
                     GeneratedArticle.objects.create(
                         original_article=scraped_article,
                         generated_title=generated_article['title'],
                         generated_text=generated_article['article'],
-                        generated_image=generated_image
+                        generated_image=image_file  # Assigning the image file here
                     )
             except Exception as e:
                 print(f"Exception occurred: {e}")
