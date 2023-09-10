@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block og_tags %}
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ article.generated_image.url }}" />
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{% url 'article_detail' article.pk %}" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{{ article.generated_title }}" />
+<meta property="og:description" content="{{ article.generated_text|slice:":200" }}" /> <!-- slicing the first 200 characters -->
 {% endblock %}
 {% block title %}- {{article.generated_title}}{% endblock %}
 {% block content %}
