@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News, unbanned! {% block title %}{% endblock %}</title>
+    <style>
+        /* General Styles */
+        /* General Styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-y: scroll; /* This ensures the vertical scrollbar is always visible to avoid content shifting */
+            font-family: Arial, sans-serif;
+        }
+
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        .header-link {
+            text-decoration: none;  /* Removes the underline */
+            color: white;           /* Keeps the text color white as in your header */
+            display: block;         /* Makes the entire header area clickable */
+            width: 100%;            /* Ensures the link occupies the full width of the header */
+            height: 100%;           /* Ensures the link occupies the full height of the header */
+        }
+
+        .header-link:hover, .header-link:focus {
+            text-decoration: none;  /* Ensures no underline on hover or focus */
+        }
+
+        .C18 {
+            text-decoration: none;  /* Removes the underline */
+            color: white;           /* Keeps the text color white as in your header */
+            width: 100%;            /* Ensures the link occupies the full width of the header */
+            height: 100%;           /* Ensures the link occupies the full height of the header */
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="https://newsunbanned.ca" class="header-link">News, <i>unbanned!</i></a>
+        <div style="font-size: 16px; color: white; margin-top: 8px;">Circumventing Canada's news ban <u>(<a href="https://www.ctvnews.ca/politics/understanding-bill-c-18-canada-s-online-news-act-and-its-proposed-rules-explained-1.6488532" class="C18">Bill C-18</i></a>)</u> with AI, since 2023</div>
+        <div style="font-size: 7px; color: white; margin-top: 4px;">* All content on this page, including images, has been generated using AI developed by OpenAI. The AI was tasked with ingesting real news articles from ctvnews.ca and generating the articles and images you see below.</div>
+    </header>    
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>

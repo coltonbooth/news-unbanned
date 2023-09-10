@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}- Articles{% endblock %}
+{% block content %}
+<div class="articles-container">
+    {% for article in articles %}
+    <div class="article">
+        <h2>{{ article.generated_title }}</h2>
+        <div class="article-content">
+            <img src="data:image/png;base64,{{ article.generated_image }}" alt="{{ article.generated_title }}">
+            {{ article.generated_text|linebreaks }}
+            
+            <a href="{{ article.original_article.url }}" target="_blank" rel="noopener noreferrer">
+                Read the original article here
+            </a>
+            <br>
+            <a href="{% url 'article_detail' article.pk %}" target="_blank">View Full Article</a>
+            <br>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'article_detail' article.pk %}" 
+            target="_blank" 
+            rel="noopener noreferrer">
+                Share this article on Facebook
+            </a>
+
+        </div>        
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+
+
+.article h2 {
+    color: #333;
+    font-weight: bold;
+}
+
+.article-content {
+    margin-top: 10px;
+    color: #555;
+    font-size: 16px;
+}
+
+.article-content img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+</style>
+{% endblock %}

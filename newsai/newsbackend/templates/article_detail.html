@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}- {{article.generated_title}}{% endblock %}
+{% block content %}
+<div class="articles-container">
+    <div class="article">
+    <h2>{{ article.generated_title }}</h2>
+    <div class="article-content">
+        <img src="data:image/png;base64,{{ article.generated_image }}" alt="{{ article.generated_title }}">
+        {{ article.generated_text|linebreaks }}
+        <a href="{{ article.original_article.url }}" target="_blank" rel="noopener noreferrer">
+            Read the original article here
+        </a>
+        <br>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.scheme }}://{{ request.get_host }}{% url 'article_detail' article.pk %}" 
+        target="_blank" 
+        rel="noopener noreferrer">
+            Share this article on Facebook
+        </a>
+
+    </div>
+</div>
+</div>
+<style>
+    .articles-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f7f7f7;
+    }
+
+    .article h2 {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .article-content {
+        margin-top: 10px;
+        color: #555;
+        font-size: 16px;
+    }
+
+    .article-content img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    </style>
+
+{% endblock %}
