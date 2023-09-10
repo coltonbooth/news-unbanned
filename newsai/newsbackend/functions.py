@@ -8,10 +8,6 @@ from PIL import Image
 
 
 
-openai.api_key = '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'
-client = ApifyClient("apify_api_qypMuKLdGwib5vhlNcrA9PDvzpfmNO1w592y")
-
-
 def generate_and_save_articles():
     generated_articles = []
     
